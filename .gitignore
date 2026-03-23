@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build & package
+dist/
+dist-electron/
+release/
+*.local
+*.tsbuildinfo
+
+# App data (contains API keys / tokens – do not commit)
+data/
+
+# Credentials & env
+.env
+.env.*
+!.env.example
+
+# OS / IDE
+.DS_Store
+*.log
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Cache
+.cache/
+.vite/
+
+# Local tooling (portable Node etc. — do not commit)
+.tools/
+
+# Scratch / local test scripts
+tmp-*.js
+
+# Intermediate iconset from iconutil (optional)
+build/icon.iconset/
