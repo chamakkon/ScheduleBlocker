@@ -17,8 +17,6 @@ cd ScheduleBlocker
 npm ci
 ```
 
-> `YOUR_USERNAME` はご自身の GitHub ユーザー名または組織名に置き換えてください。
-
 ## 開発
 
 ```bash
