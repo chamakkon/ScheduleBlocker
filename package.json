@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Desktop day planner: timeline blocks, Google Calendar/Tasks & Slack integration (Electron + React + TypeScript)",
   "license": "MIT",
-  "author": "",
+  "author": "chamakkon",
   "repository": {
     "type": "git",
     "url": "https://github.com/chamakkon/ScheduleBlocker.git"
