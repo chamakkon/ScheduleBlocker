@@ -49,6 +49,24 @@ npm run pack
 
 `build/icon.icns` を使っています。再生成する場合は `build/generate-icon.mjs` と `iconutil`（macOS）を利用できます（詳細は `build/` 内スクリプト参照）。
 
+## GitHub に公開する手順
+
+1. GitHub で **新しい空のリポジトリ** を作成（README は作らないとコンフリクトしにくいです）。
+2. このリポジトリ内の **`YOUR_USERNAME`** を実際のユーザー名または組織名に置き換える:
+   - `README.md` の `git clone` URL
+   - `package.json` の `repository.url`
+3. （任意）`git config user.name` / `user.email` を公開用に設定。
+4. プッシュ:
+
+```bash
+git remote add origin https://github.com/YOUR_USERNAME/ScheduleBlocker.git
+git push -u origin main
+```
+
+5. GitHub の **Settings → Secrets and variables → Actions** は、現状の CI では不要です（ビルドのみ）。
+
+**公開前の確認:** `git status` で `data/` や `.env` が含まれていないこと、`npm run build` が通ることを確認してください。
+
 ## ライセンス
 
 [MIT](LICENSE)
