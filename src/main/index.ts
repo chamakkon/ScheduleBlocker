@@ -38,8 +38,30 @@ import {
   disconnectSlack,
   shareTimelineImage
 } from "./slack";
+import { updateElectronApp } from "update-electron-app";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+function initAutoUpdater(): void {
+  if (!app.isPackaged) {
+    return;
+  }
+  if (process.env.DISABLE_AUTO_UPDATE === "1") {
+    return;
+  }
+  try {
+    updateElectronApp({
+      logger: {
+        log: (m: string) => console.log("[update]", m),
+        info: (m: string) => console.info("[update]", m),
+        error: (m: string) => console.error("[update]", m),
+        warn: (m: string) => console.warn("[update]", m)
+      }
+    });
+  } catch (err) {
+    console.error("[update] init failed:", err);
+  }
+}
 
 let mainWindow: InstanceType<typeof BrowserWindow> | null = null;
 
@@ -202,6 +224,7 @@ function registerIpc(): void {
 }
 
 app.whenReady().then(() => {
+  initAutoUpdater();
   registerIpc();
   createWindow();
 

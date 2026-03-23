@@ -31,11 +31,20 @@ npm run dev
 npm run build
 ```
 
-macOS アプリ（`.app`）を `release/` に出力:
+macOS アプリ（`.app` のみ、開発用）を `release/` に出力:
 
 ```bash
 npm run pack
 ```
+
+配布用 **DMG / ZIP**（アップロードなし）:
+
+```bash
+npm run dist
+```
+
+**GitHub Release へ公開**する手順は **[docs/PUBLISH.md](docs/PUBLISH.md)** を参照。  
+タグ `v*` を push すると **GitHub Actions** で `npm run release` が走る設定です。
 
 ## データとセキュリティ
 
@@ -61,7 +70,7 @@ Daily **Electron + React + TypeScript** app for planning your day on a timeline.
 ### Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ScheduleBlocker.git
+git clone https://github.com/chamakkon/ScheduleBlocker.git
 cd ScheduleBlocker
 npm ci
 npm run dev
@@ -71,8 +80,11 @@ npm run dev
 
 ```bash
 npm run build   # typecheck + Vite bundle
-npm run pack    # macOS .app via electron-builder → release/
+npm run pack    # macOS .app only → release/
+npm run dist    # DMG + ZIP locally (no upload)
 ```
+
+See [docs/PUBLISH.md](docs/PUBLISH.md) for GitHub Releases.
 
 Do **not** commit `data/` or any API secrets; they stay local or in app `userData`.
 

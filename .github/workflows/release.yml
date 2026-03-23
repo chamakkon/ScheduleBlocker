@@ -1,0 +1,31 @@
+# Git にタグ v1.2.3 を push すると macOS 用 DMG/ZIP をビルドし GitHub Release へ公開します。
+# 要: package.json の version をタグと揃える（例: tag v1.0.1 → version 1.0.1）
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build & publish to GitHub Releases
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run release

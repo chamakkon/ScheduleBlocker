@@ -26,12 +26,14 @@
     "dev": "ELECTRON_RUN_AS_NODE= vite",
     "build": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json && vite build",
     "pack": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder",
+    "dist": "npm run build && electron-builder --publish never",
+    "release": "npm run build && electron-builder --publish always",
     "preview": "vite preview"
   },
   "build": {
     "appId": "com.dailyvisualplanner.app",
     "productName": "Daily Visual Planner",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "release"
     },
@@ -42,8 +44,19 @@
     "mac": {
       "icon": "build/icon.icns",
       "category": "public.app-category.productivity",
-      "target": "dir"
+      "target": [
+        { "target": "dmg", "arch": ["arm64", "x64"] },
+        { "target": "zip", "arch": ["arm64", "x64"] }
+      ],
+      "hardenedRuntime": false
     },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "chamakkon",
+        "repo": "ScheduleBlocker"
+      }
+    ],
     "extraResources": []
   },
   "dependencies": {
@@ -51,6 +64,7 @@
     "html-to-image": "^1.11.13",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "update-electron-app": "^3.1.2",
     "zustand": "^5.0.11"
   },
   "devDependencies": {
