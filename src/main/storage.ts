@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { app } from "electron/main";
+import { app } from "electron";
 import type {
   DailyPlan,
   SettingsPayload

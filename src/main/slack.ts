@@ -1,4 +1,4 @@
-import { net } from "electron/main";
+import { net } from "electron";
 import {
   getSlackBotToken,
   setSlackBotToken,

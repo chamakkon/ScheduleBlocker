@@ -1,6 +1,6 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { app, safeStorage } from "electron/main";
+import { app, safeStorage } from "electron";
 
 type StoredCredentials = {
   googleRefreshToken?: string;
