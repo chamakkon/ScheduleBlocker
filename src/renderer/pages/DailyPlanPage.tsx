@@ -1,5 +1,6 @@
 import { toPng } from "html-to-image";
 import {
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -537,6 +538,8 @@ export function DailyPlanPage() {
   const handleFinalize = async () => {
     finalizePlan();
     setMode("finalized");
+    await window.appApi.setWindowMode("compact");
+
     await window.appApi.saveTodayPlan({
       ...plan,
       isFinalized: true
@@ -545,8 +548,6 @@ export function DailyPlanPage() {
     if (googleSettings.enabled && googleSettings.exportToCalendarOnFinalize) {
       await handleExportToCalendar();
     }
-
-    await window.appApi.setWindowMode("compact");
   };
 
   const handleEditMode = async () => {
@@ -597,7 +598,7 @@ export function DailyPlanPage() {
     }
   };
 
-  const handleNewTask = () => {
+  const handleNewTask = useCallback(() => {
     const candidateId = addCandidate({
       title: "",
       subTasks: [],
@@ -609,7 +610,25 @@ export function DailyPlanPage() {
     if (candidateId) {
       setAutoFocusCandidateId(candidateId);
     }
-  };
+  }, [addCandidate, colors]);
+
+  useEffect(() => {
+    if (!canEdit) {
+      return undefined;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      const mod = event.metaKey || event.ctrlKey;
+      if (!mod || event.key.toLowerCase() !== "t") {
+        return;
+      }
+      event.preventDefault();
+      handleNewTask();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [canEdit, handleNewTask]);
 
   const googleEnabled = googleSettings.enabled;
   const slackEnabled = slackSettings.enabled;

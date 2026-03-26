@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { PointerEvent } from "react";
 import { useT } from "@renderer/lib/i18n";
+import { isImeComposing } from "@renderer/lib/ime";
 import type {
   ColorSetting,
   TaskCandidate
@@ -85,9 +86,14 @@ export function CandidateCard({
                   })
                 }
                 onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    titleInputRef.current?.blur();
+                  if (event.key !== "Enter") {
+                    return;
                   }
+                  if (isImeComposing(event)) {
+                    return;
+                  }
+                  event.preventDefault();
+                  titleInputRef.current?.blur();
                 }}
                 placeholder={t("candidate.taskName")}
                 ref={titleInputRef}

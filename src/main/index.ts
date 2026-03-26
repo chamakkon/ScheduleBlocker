@@ -143,24 +143,32 @@ function registerIpc(): void {
       const workArea = screen.getPrimaryDisplay().workAreaSize;
       const bounds = mainWindow.getBounds();
 
+      const rightEdge = bounds.x + bounds.width;
+
       if (mode === "compact") {
         const compactWidth = Math.min(300, workArea.width);
         mainWindow.setMinimumSize(240, 760);
-        mainWindow.setBounds({
-          x: bounds.x,
-          y: bounds.y,
-          width: compactWidth,
-          height: bounds.height
-        }, true);
+        mainWindow.setBounds(
+          {
+            x: rightEdge - compactWidth,
+            y: bounds.y,
+            width: compactWidth,
+            height: bounds.height
+          },
+          true
+        );
       } else {
         const expandedWidth = Math.max(920, Math.round((workArea.width * 2) / 3));
         mainWindow.setMinimumSize(860, 760);
-        mainWindow.setBounds({
-          x: bounds.x,
-          y: bounds.y,
-          width: expandedWidth,
-          height: bounds.height
-        }, true);
+        mainWindow.setBounds(
+          {
+            x: rightEdge - expandedWidth,
+            y: bounds.y,
+            width: expandedWidth,
+            height: bounds.height
+          },
+          true
+        );
       }
     }
   );
