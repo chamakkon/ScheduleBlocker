@@ -1,7 +1,7 @@
 {
   "name": "daily-visual-planner",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Desktop day planner: timeline blocks, Google Calendar/Tasks & Slack integration (Electron + React + TypeScript)",
   "license": "MIT",
   "author": "chamakkon",
